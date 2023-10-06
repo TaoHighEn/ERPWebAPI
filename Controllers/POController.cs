@@ -82,27 +82,43 @@ namespace ERPWebAPI.Controllers
             }
         }
 
-        public string POCreate([FromBody]POForm form)
+        public string POCreate([FromBody] POForm form)
         {
-            try 
+            string return_result = string.Empty;
+            try
             {
+
                 if (string.IsNullOrEmpty(form.po_id))
                 {
                     throw new Exception("查無該單據資料");
                 }
                 //Do Something
+                switch (form.po_id)
+                {
+                    case "001":
+                        return_result = "嘿嘿我跑到請購單喔";
+                        break;
+                    case "002":
+                        return_result = "嘿嘿我跑到採購單喔";
+                        break;
+                    case "003":
+                        return_result = "嘿嘿我跑到生產製令喔";
+                        break;
+                    default:
+                        break;
+                }
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 return ex.Message;
             }
-            return string.Format(@"取得ID：{0},現在傳入的是：{1},表單內容為：{2},即將對電子表單DB進行操作並產生表單。",form.po_id,form.po_name,form.po_content);
+            return string.Format(@"取得ID：{0},現在傳入的是：{1},表單內容為：{2},【{3}】即將對電子表單DB進行操作並產生表單。", form.po_id, form.po_name, form.po_content, return_result);
         }
     }
     public class POForm
     {
-        public string? po_id {  get; set; }
-        public string? po_name { get; set;}
-        public string? po_content { get; set;}
+        public string? po_id { get; set; }
+        public string? po_name { get; set; }
+        public string? po_content { get; set; }
     }
 }
